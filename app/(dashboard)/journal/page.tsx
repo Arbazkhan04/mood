@@ -2,6 +2,8 @@ import EntryCard from '@/components/EntryCard'
 import NewEntryCard from '@/components/NewEntryCard'
 import { getUserByClerkID } from '@/utlis/auth'
 import { prisma } from '@/utlis/db'
+import { link } from 'fs'
+import Link from 'next/link'
 
 const getEntries = async () => {
   const user = await getUserByClerkID()
@@ -26,7 +28,11 @@ const JournalPage = async () => {
       <div className="grid grid-cols-3 gap-4 ">
         <NewEntryCard />
         {entries.map((entry) => (
-          <EntryCard key={entry.id} entry={entry} />
+          <div key={entry.id}>
+          <Link href={`/journal/${entry.id}`}>
+            <EntryCard entry={entry} />
+          </Link>
+        </div>
         ))}
       </div>
     </div>
