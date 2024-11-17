@@ -47,7 +47,7 @@ export const analyze = async (content) => {
     modelName: 'gpt-3.5-turbo',
     apiKey: process.env.OPENAI_API_KEY
  })
-  const result = await model.call(input)
+  const result = await model.invoke(input)
 
   try {
     return parser.parse(result)
