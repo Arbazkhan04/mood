@@ -1,5 +1,6 @@
 import EntryCard from '@/components/EntryCard'
 import NewEntryCard from '@/components/NewEntryCard'
+import { analyze } from '@/utlis/ai'
 import { getUserByClerkID } from '@/utlis/auth'
 import { prisma } from '@/utlis/db'
 import { link } from 'fs'
@@ -15,6 +16,7 @@ const getEntries = async () => {
       createdAt: 'desc',
     },
   })
+
 
   return entries
 }

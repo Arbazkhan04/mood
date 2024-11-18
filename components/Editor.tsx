@@ -9,14 +9,13 @@ const Editor = ({ entry }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [analysis, setAnalysis] = useState(entry.analysis)
 
-  // const { mood, summary, color, subject, negative } = analysis
+  const { mood, summary, color, subject, negative } = analysis
   const analysisData = [
-    { name: 'Summary', value: '' },
-    { name: 'Subject', value: '' },
-    { name: 'Mood', value: '' },
-    { name: 'Negative', value: true ? 'True' : 'False' },
+    { name: 'Summary', value: summary },
+    { name: 'Subject', value: subject },
+    { name: 'Mood', value: mood },
+    { name: 'Negative', value: negative ? 'True' : 'False' },
   ]
-
   useAutosave({
     data: value,
     onSave: async (_value) => {
@@ -38,8 +37,8 @@ const Editor = ({ entry }) => {
       </div>
 
       <div className="border-l border-black/10">
-        <div className="px-6 py-10" style={{ backgroundColor: '-moz-initial' }}>
-          <h2 className="text-2xl">Analysis</h2>
+      <div className="px-6 py-10" style={{ backgroundColor: color }}>
+        <h2 className="text-2xl">Analysis</h2>
         </div>
         <div>
           <ul>
