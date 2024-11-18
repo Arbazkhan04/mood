@@ -25,11 +25,21 @@ const createURL = (path: string) => {
     )
   
     if (res.ok) {
-        const data = await res.json()
-        console.log("API Response:", data) // Log the response here
-        return data.data
-      } else {
-        console.error("Error creating new entry:", res.statusText)
-        return null
-      }    
+      const data = await res.json()
+      return data.data
+    }
+  }
+
+  export const askQuestion = async (question) => {
+    const res = await fetch(
+      new Request(createURL('/api/question'), {
+        method: 'POST',
+        body: JSON.stringify({ question }),
+      })
+    )
+  
+    if (res.ok) {
+      const data = await res.json()
+      return data.data
+    }
   }
