@@ -1,48 +1,46 @@
-import EntryCard from '@/components/EntryCard'
-import NewEntryCard from '@/components/NewEntryCard'
-import Question from '@/components/Question'
-import { analyze } from '@/utlis/ai'
-import { getUserByClerkID } from '@/utlis/auth'
-import { prisma } from '@/utlis/db'
-import { link } from 'fs'
-import Link from 'next/link'
+import EntryCard from '@/components/EntryCard';
+import NewEntryCard from '@/components/NewEntryCard';
+import Question from '@/components/Question';
+import Link from 'next/link';
+import { getUserByClerkID } from '@/utlis/auth';
+import { prisma } from '@/utlis/db';
 
 const getEntries = async () => {
-  const user = await getUserByClerkID()
+  const user = await getUserByClerkID();
   const entries = await prisma.journalEntry.findMany({
-    where: {
+    where: { 
       userId: user.id,
-    },
-    orderBy: {
-      createdAt: 'asc',
-    },
-  })
+     },
+     
+    orderBy: { createdAt: 'asc' },
+    include:{
+      analysis:true
+    }
+  });
 
-
-  return entries
-}
+  return entries;
+};
 
 const JournalPage = async () => {
-  const entries = await getEntries()
+  const entries = await getEntries();
+  console.log(entries)
 
   return (
-    <div className="p-10 bg-zinc-400/10 h-full">
-      <h2 className="text-3xl mb-8">Journal</h2>
-      <div className="my-8">
+    <div className="p-8 bg-gray-50 min-h-screen">
+      {/* <h2 className="text-4xl font-bold text-gray-800 mb-6"></h2> */}
+      <div className="my-6">
         <Question />
       </div>
-      <div className="grid grid-cols-3 gap-4 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <NewEntryCard />
         {entries.map((entry) => (
-          <div key={entry.id}>
-          <Link href={`/journal/${entry.id}`}>
+          <Link key={entry.id} href={`/journal/${entry.id}`}>
             <EntryCard entry={entry} />
           </Link>
-        </div>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default JournalPage
+export default JournalPage;
